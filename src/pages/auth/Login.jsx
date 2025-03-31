@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLoginMutation } from "../features/auth/authAPI";
+import { useLoginMutation } from "../../features/auth/authAPI";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../features/auth/authSlice";
+import { setCredentials } from "../../features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import gamingSetup from "../assets/images/manette3.png";
-import Loader from "./Loader";
+import gamingSetup from "../../assets/images/manette3.png";
+import Loader from "../../components/Loader";
 
 const Login = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -114,12 +114,22 @@ const Login = () => {
             </button>
           </form>
 
-          <p className="text-gray-400 text-sm mt-4 text-center">
-            Pas encore de compte ?{" "}
-            <Link to={"/register"} className="text-pink-500 hover:underline">
-              Inscris-toi
-            </Link>
-          </p>
+          <div className="flex justify-between">
+            <p className="text-gray-400 text-sm mt-4">
+              Pas encore de compte ?{" "}
+              <Link to={"/register"} className="text-pink-500 hover:underline">
+                Inscris-toi
+              </Link>
+            </p>
+            <p className="text-gray-400 text-sm mt-4">
+              <Link
+                to={"/forgot-pwd"}
+                className="text-pink-500 hover:underline"
+              >
+                Mot de pass oublié?{" "}
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

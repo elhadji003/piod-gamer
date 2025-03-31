@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import gamingSetup from "../assets/images/manette3.png"; // Assure-toi que le chemin est correct
-import { useRegisterMutation } from "../features/auth/authAPI";
+import gamingSetup from "../../assets/images/manette3.png"; // Assure-toi que le chemin est correct
+import { useRegisterMutation } from "../../features/auth/authAPI";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
@@ -157,7 +157,7 @@ const Register = ({ onClick }) => {
               Créer le compte
             </button>
           </form>
-          <p className="text-gray-400 text-sm mt-6 text-center">
+          <p className="text-gray-400 text-sm mt-6">
             Déjà un compte ?{" "}
             <Link
               to={"/login"}

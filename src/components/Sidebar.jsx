@@ -18,9 +18,9 @@ const Sidebar = ({ isOpen, setIsOpen, isChangeColor }) => {
 
   return (
     <div
-      className={`fixed left-0 h-full text-white transition-all duration-300 shadow-lg ${
+      className={`sidebar fixed left-0 h-screen text-white transition-all duration-300 shadow-lg ${
         isOpen ? "w-64" : "w-20"
-      }`}
+      } overflow-y-auto`}
     >
       {/* Header avec pseudo */}
       <div className="relative w-full p-4 border-b border-gray-700 flex items-baseline justify-between">
@@ -45,7 +45,7 @@ const Sidebar = ({ isOpen, setIsOpen, isChangeColor }) => {
                     </span>
                   )
                 ) : (
-                  <span>Chargement...</span> // Afficher un message ou un autre indicateur en attendant les données utilisateur
+                  <span>Chargement...</span>
                 )}
               </span>
             </span>
@@ -68,7 +68,7 @@ const Sidebar = ({ isOpen, setIsOpen, isChangeColor }) => {
               icon: isAdmin ? faHome : faDashboard,
               label: isAdmin ? "Dashboard" : "Dashboard",
             },
-            { to: "/blog-gaming", icon: faGamepad, label: "Gamers Posts" },
+            { to: "/gaming-post", icon: faGamepad, label: "Gamers Posts" },
             { to: "/profil-user", icon: faUser, label: "Profil" },
             { to: "/parametre", icon: faCog, label: "Paramètres" },
           ].map((item) => (

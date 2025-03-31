@@ -125,19 +125,28 @@
 
 /* Sidebar */
 /* Style la barre de scroll uniquement pour les navigateurs modernes */
+.sidebar {
+  height: 90vh;
+  overflow-y: auto; /* Activation du scroll */
+  scrollbar-width: thin; /* Pour Firefox */
+  scrollbar-color: #4b5563 #1f2937; /* Pour Firefox */
+}
+
+/* Style de la scrollbar pour Chrome, Edge et Safari */
 .sidebar::-webkit-scrollbar {
-  width: 8px; /* Largeur de la barre */
+  width: 2px;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background: #4b5563; /* Couleur du curseur */
-  border-radius: 4px; /* Coins arrondis */
+  background: #4b5563;
+  border-radius: 4px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
-  background: #374151; /* Couleur quand la souris est dessus */
+  background: #374151;
 }
 
 .sidebar::-webkit-scrollbar-track {
-  background: #1f2937; /* Couleur du fond de la barre */
+  background: #1f2937;
 }
+

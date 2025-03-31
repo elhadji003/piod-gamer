@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import "./index.css";
 import "./css/global.css";
 import "animate.css";
+
 import { ToastContainer } from "react-toastify";
 
 createRoot(document.getElementById("root")).render(

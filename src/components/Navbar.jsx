@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes, faSun } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
 import { useGetMeQuery } from "../features/auth/authAPI";
 
 const Navbar = ({ onClick, isChangeColor }) => {
@@ -74,7 +73,44 @@ const Navbar = ({ onClick, isChangeColor }) => {
           </li>
         </ul>
       </div>
-      {/* {menuOpen && <div></div>} */}
+      {menuOpen && (
+        <div
+          className={`md:hidden ${
+            menuOpen ? "block" : "hidden"
+          } transition-all duration-300`}
+        >
+          <ul className="mt-5">
+            <li className="mb-3">
+              {user?.avatar ? (
+                <img
+                  src={`http://127.0.0.1:8000${user?.avatar}`}
+                  alt="Avatar"
+                  className="rounded-md object-cover border-2 border-white"
+                />
+              ) : (
+                <img
+                  src="/default-avatar.png"
+                  alt="Default Avatar"
+                  className="w-10 h-10 bg-white rounded-full object-cover border-2 border-white"
+                />
+              )}
+            </li>
+            <li className="space-x-4">
+              <span className="font-bold">{user?.full_name}</span>
+              <button onClick={handleChangeColor}>
+                <FontAwesomeIcon
+                  icon={faSun}
+                  className={
+                    isChangeColor
+                      ? "text-pink-500  hover:text-green-500"
+                      : "text-green-500 hover:text-pink-500"
+                  }
+                />
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };

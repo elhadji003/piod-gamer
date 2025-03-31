@@ -6,9 +6,12 @@ import NotFound from "./pages/NotFound";
 import AuthWatcher from "./utils/AuthWatcher ";
 import { userRoutes } from "./routes/UserRoutes";
 import { adminRoutes } from "./routes/AdminRoutes";
-import Login from "./components/Login";
-import Register from "./components/Register";
+
 import Layout from "./layout/Layout";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ForgotPwd from "./pages/auth/ForgotPwd";
+import ResetPwd from "./pages/auth/ResetPwd";
 // Import routes
 
 const App = () => {
@@ -19,6 +22,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-pwd" element={<ForgotPwd />} />
+        <Route path="/reset/:uidb64/:token" element={<ResetPwd />} />
         <Route path="/unauthorized" element={<NotFound />} />
 
         {/* Routes USER */}

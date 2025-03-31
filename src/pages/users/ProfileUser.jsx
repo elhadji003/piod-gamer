@@ -20,7 +20,7 @@ const ProfileUser = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file)); // Prévisualisation
+      setSelectedImage(URL.createObjectURL(file));
       uploadImage(file);
     }
   };

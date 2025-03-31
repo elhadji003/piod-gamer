@@ -73,6 +73,22 @@ export const authApi = createApi({
         body: formData,
       }),
     }),
+    resetPwd: builder.mutation({
+      query: (data) => ({
+        url: "reset-password/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    resetPwdConfirm: builder.mutation({
+      query: ({ uidb64, token, new_password }) => ({
+        url: `reset/${uidb64}/${token}/`,
+        method: "POST",
+        body: { new_password },
+      }),
+    }),
+
     refreshToken: builder.mutation({
       query: (refresh) => ({
         url: "token/refresh/",
@@ -89,5 +105,7 @@ export const {
   useLogoutMutation,
   useGetMeQuery,
   useUpdateProfileMutation,
+  useResetPwdMutation,
+  useResetPwdConfirmMutation,
   useRefreshTokenMutation,
 } = authApi;
