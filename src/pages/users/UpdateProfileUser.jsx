@@ -8,7 +8,7 @@ const UpdateProfileUser = () => {
   const { data: user, isLoading, error, refetch } = useGetMeQuery();
   const [updateProfile] = useUpdateProfileMutation();
   const [formData, setFormData] = useState({
-    username: user?.username || "",
+    full_name: user?.full_name || "",
     pseudo: user?.pseudo || "",
     email: user?.email || "",
     phone: user?.phone || "",
@@ -19,7 +19,7 @@ const UpdateProfileUser = () => {
   useEffect(() => {
     if (user) {
       setFormData({
-        username: user?.username || "",
+        full_name: user?.full_name || "",
         pseudo: user?.pseudo || "",
         email: user?.email || "",
         phone: user?.phone || "",
@@ -64,8 +64,8 @@ const UpdateProfileUser = () => {
               <label>Prenom:</label>
               <input
                 type="text"
-                name="username"
-                value={formData.username}
+                name="full_name"
+                value={formData.full_name}
                 onChange={handleChange}
                 className="p-2"
               />

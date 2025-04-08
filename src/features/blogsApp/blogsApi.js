@@ -28,6 +28,21 @@ const blogApi = createApi({
       }),
       invalidatesTags: ["Posts"], // Rafraîchit la liste après ajout
     }),
+    getMyPost: builder.query({
+      query: (id) => ({
+        url: `posts/${id}/`,
+        method: "GET",
+      }),
+      invalidatesTags: ["Posts"],
+    }),
+    updateMyPost: builder.mutation({
+      query: ({ id, formData }) => ({
+        url: `posts/${id}/`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["Posts"],
+    }),
     deleteMyPost: builder.mutation({
       query: (id) => ({
         url: `posts/${id}/`,
@@ -48,6 +63,8 @@ const blogApi = createApi({
 export const {
   useGetBlogPostsQuery,
   useCreateBlogPostMutation,
+  useGetMyPostQuery,
+  useUpdateMyPostMutation,
   useDeleteMyPostMutation,
   useLikePostMutation,
 } = blogApi;

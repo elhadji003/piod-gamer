@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaChevronLeft } from "react-icons/fa";
-import { Link, useOutletContext } from "react-router-dom";
-import { useCreateBlogPostMutation } from "../../features/blogsApp/blogsApi";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
+import {
+  useGetMyPostQuery,
+  useUpdateMyPostMutation,
+} from "../../features/blogsApp/blogsApi";
 
-const CreatePost = () => {
-  const { register, handleSubmit, reset } = useForm();
+const UpdatePost = () => {
+  const { id } = useParams();
+  const { register, handleSubmit, reset, setValue } = useForm();
   const [selectImage, setSelectImage] = useState(null);
   const { isColorChanged } = useOutletContext();
-  const [createPost, { isLoading, error }] = useCreateBlogPostMutation();
+  const { data: post } = useGetMyPostQuery(id, { skip: !id });
+  const [update, { isLoading, error }] = useUpdateMyPostMutation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (post) {
+      setValue("title", post?.title || "Non défini");
+      setValue("description", post?.description || "Non défini");
+      setValue("image", post?.image || "Non défini");
+    }
+  }, [post, setValue]);
 
   // Gestion de l'aperçu d'image
   const handleChangeFile = (e) => {
@@ -21,21 +40,29 @@ const CreatePost = () => {
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
+
       formData.append("title", data.title);
       formData.append("description", data.description);
-      formData.append("image", data.file[0]);
+
+      if (data.file && data.file.length > 0) {
+        formData.append("image", data.file[0]);
+      }
+
+      console.log("Données envoyées :", Object.fromEntries(formData.entries()));
 
       // Envoi du FormData à l'API
-      await createPost(formData).unwrap();
+      await update({ id, formData }).unwrap();
+
       reset();
       setSelectImage(null); // Réinitialise l'aperçu d'image
+      navigate("/gaming-post");
     } catch (error) {
       console.error("Erreur :", error);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900 text-white">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900 text-white p-4">
       {/* Bouton de retour */}
       <div className="w-full max-w-4xl mb-6">
         <Link
@@ -43,7 +70,7 @@ const CreatePost = () => {
           className="flex items-center gap-3 text-gray-300 hover:text-white transition duration-300"
         >
           <FaChevronLeft className="text-lg" />
-          Retour au dashboard
+          Retour au blog
         </Link>
       </div>
 
@@ -54,7 +81,7 @@ const CreatePost = () => {
             isColorChanged ? "text-pink-500" : "text-green-500"
           }`}
         >
-          Créer un post
+          Modifier un post
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -140,7 +167,7 @@ const CreatePost = () => {
             } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={isLoading}
           >
-            {isLoading ? "Publication..." : "Publier"}
+            {isLoading ? "Publication..." : "Mettre à jour"}
           </button>
         </form>
       </div>
@@ -148,4 +175,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default UpdatePost;

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import gamingSetup from "../../assets/images/manette3.png"; // Assure-toi que le chemin est correct
 import { useRegisterMutation } from "../../features/auth/authAPI";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = ({ onClick }) => {
   const {
@@ -14,17 +14,26 @@ const Register = ({ onClick }) => {
     formState: { errors },
   } = useForm();
 
-  const [registerUser, { isLoading }] = useRegisterMutation();
+  const navigate = useNavigate();
 
+  const [registerUser, { isLoading }] = useRegisterMutation();
   const onSubmit = async (userData) => {
     try {
-      const res = await registerUser(userData);
+      const res = await registerUser(userData).unwrap(); // Si tu utilises RTK Query
+
       console.log("Register data:", res);
       reset();
       toast.success("Inscription réussie");
+      navigate("/login");
     } catch (error) {
-      console.log("Erreur", error);
-      toast.error("Une erreur s'est produite lors de l'inscription");
+      console.log("Erreur:", error);
+
+      // Affiche un toast personnalisé si le pseudo ou l'email existent déjà
+      if (error?.data?.message) {
+        toast.error(error.data.message);
+      } else {
+        toast.error("Une erreur s'est produite lors de l'inscription");
+      }
     }
   };
 
@@ -62,13 +71,13 @@ const Register = ({ onClick }) => {
               </div>
               <div className="w-1/2">
                 <label className="block text-white font-semibold mb-1">
-                  Username
+                  Prenom(s) et Nom(s)
                 </label>
                 <input
                   type="text"
                   {...register("full_name")}
                   className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-300 ease-in-out"
-                  placeholder="Username"
+                  placeholder="Prenom(s) et Nom(s)"
                   required
                 />
               </div>
