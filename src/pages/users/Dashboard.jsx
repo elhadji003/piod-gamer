@@ -13,7 +13,7 @@ const Dashboard = () => {
     alert("Fonctionnalité nos disponbles !");
   };
 
-  const { data, isLoading, error } = useGetBlogPostsQuery();
+  const { data } = useGetBlogPostsQuery();
   const likesCounts = data?.results?.likes_count;
 
   console.log("Like :", likesCounts);

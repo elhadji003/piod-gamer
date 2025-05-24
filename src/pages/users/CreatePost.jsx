@@ -10,6 +10,7 @@ const CreatePost = () => {
   const { isColorChanged } = useOutletContext();
   const [createPost, { isLoading, error }] = useCreateBlogPostMutation();
 
+
   // Gestion de l'aperçu d'image
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
@@ -23,6 +24,7 @@ const CreatePost = () => {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
+      formData.append("price", parseFloat(data.price).toFixed(2));
       formData.append("image", data.file[0]);
 
       // Envoi du FormData à l'API
@@ -74,6 +76,32 @@ const CreatePost = () => {
               }`}
               placeholder="Entrez le titre du post"
             />
+          </div>
+
+          <div>
+            <label htmlFor="price" className="block text-gray-300 mb-1">
+              Prix{" "}
+              <span className="text-sm text-gray-400">
+                (entre 1 et 100000 FCFA)
+              </span>
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                id="price"
+                type="number"
+                step="0.01"
+                min="1"
+                max="100000"
+                {...register("price", { required: true })}
+                className={`w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none ${
+                  isColorChanged
+                    ? "focus:ring-2 focus:ring-pink-500"
+                    : "focus:ring-2 focus:ring-green-500"
+                }`}
+                placeholder="Entrez le prix du produit"
+              />
+              <span className="text-gray-300">FCFA</span>
+            </div>
           </div>
 
           {/* Champ Description */}

@@ -25,6 +25,7 @@ const UpdatePost = () => {
     if (post) {
       setValue("title", post?.title || "Non défini");
       setValue("description", post?.description || "Non défini");
+      setValue("price", parseFloat(post?.price) || ""); // <- ici
       setValue("image", post?.image || "Non défini");
     }
   }, [post, setValue]);
@@ -43,6 +44,7 @@ const UpdatePost = () => {
 
       formData.append("title", data.title);
       formData.append("description", data.description);
+      formData.append("price", data.price);
 
       if (data.file && data.file.length > 0) {
         formData.append("image", data.file[0]);
@@ -101,6 +103,33 @@ const UpdatePost = () => {
               }`}
               placeholder="Entrez le titre du post"
             />
+          </div>
+
+          {/* Champ Prix */}
+          <div>
+            <label htmlFor="price" className="block text-gray-300 mb-1">
+              Prix{" "}
+              <span className="text-sm text-gray-400">
+                (entre 1 et 100000 FCFA)
+              </span>
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                id="price"
+                type="number"
+                step="0.01"
+                min="1"
+                max="100000"
+                {...register("price", { required: true, valueAsNumber: true })}
+                className={`w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none ${
+                  isColorChanged
+                    ? "focus:ring-2 focus:ring-pink-500"
+                    : "focus:ring-2 focus:ring-green-500"
+                }`}
+                placeholder="Entrez le prix du produit"
+              />
+              <span className="text-gray-300">FCFA</span>
+            </div>
           </div>
 
           {/* Champ Description */}

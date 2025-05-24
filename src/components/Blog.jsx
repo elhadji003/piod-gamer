@@ -69,6 +69,10 @@ const Blog = ({ searchBlog }) => {
     }));
   };
 
+  const formatPrix = (prix) => {
+    return new Intl.NumberFormat("fr-FR").format(prix) + " FCFA";
+  };
+
   return (
     <div>
       {filteredBlogs.length > 0 ? (
@@ -162,19 +166,18 @@ const Blog = ({ searchBlog }) => {
                     {showDescript[post.id] && (
                       <div className="absolute bg-black bg-opacity-70 inset-0 text-white p-4 flex flex-col gap-4 items-center justify-center rounded-md animate__animated animate__backInDown">
                         <span>
+                          Titre :{" "}
+                          <span className="font-bold">{post.title}</span>
+                        </span>
+                        <span>
                           Description :{" "}
                           <span className="font-bold">{post.description}</span>
                         </span>
                         <span>
-                          Model :{" "}
-                          <span className="font-bold">Derinere génération</span>
-                        </span>
-                        <span>
-                          Reste :{" "}
-                          <span className="font-bold">{post.description}</span>
-                        </span>
-                        <span>
-                          Prix : <span className="font-bold">5000 FCFA</span>
+                          Prix :{" "}
+                          <span className="font-bold">
+                            {formatPrix(post.price)}
+                          </span>
                         </span>
                         <span>
                           <Link
